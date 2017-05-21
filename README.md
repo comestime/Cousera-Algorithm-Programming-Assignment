@@ -1,5 +1,8 @@
 # Cousera-Algorithm-Programming-Assignment
 
+## Course Home
+[Link](https://www.coursera.org/learn/algorithms-part1/home/welcome)
+
 ## Programming Assignment 1: Percolation
 [Specification](http://coursera.cs.princeton.edu/algs4/assignments/percolation.html)
 
