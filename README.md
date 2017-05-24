@@ -12,3 +12,5 @@
 ## Programming Assignment 3: Collinear Points
 [Specification](http://coursera.cs.princeton.edu/algs4/assignments/collinear.html)
 
+## Programming Assignment 4: 8 Puzzles
+[Specification](http://coursera.cs.princeton.edu/algs4/assignments/8puzzle.html)
