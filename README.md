@@ -14,3 +14,6 @@
 
 ## Programming Assignment 4: 8 Puzzles
 [Specification](http://coursera.cs.princeton.edu/algs4/assignments/8puzzle.html)
+
+## Programming Assignment 5: Kd-Trees
+[Specification](http://coursera.cs.princeton.edu/algs4/assignments/kdtree.html)
