@@ -200,7 +200,7 @@ public class KdTree {
 
 	public static void main(String[] args) {       // unit testing of the methods (optional) 
 	    // read the points from a file
-	    In in = new In(args[0]);
+	    In in = new In(args[0]); 
 	    KdTree treeSet = new KdTree();
 		while (!in.isEmpty()) {
 			double x = in.readDouble();
