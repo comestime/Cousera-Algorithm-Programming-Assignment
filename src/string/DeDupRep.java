@@ -61,6 +61,6 @@ public class DeDupRep {
 		System.out.println(solution.deDup("aabbbc"));
 		System.out.println(solution.deDup("aabbbcccc"));
 		System.out.println(solution.deDup("abcccbbaad"));
-		System.out.println(solution.deDup("abcddcb"));
+		System.out.println(solution.deDup("abcdddcbbae"));
 	}
 }
