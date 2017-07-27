@@ -1,5 +1,7 @@
 # Cousera-Algorithm-Programming-Assignment
 
+Using this repository as my playground with algorithms
+
 ## Course Home
 [Link](https://www.coursera.org/learn/algorithms-part1/home/welcome)
 
