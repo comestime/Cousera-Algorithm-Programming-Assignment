@@ -61,19 +61,16 @@ public class CombinationWDup {
 	        // for each distinct element with an occurrence of "cur" times
 	        // it can present in the result from 0 to k - selected times
 	        int cur = map.get(distinctNums.get(index));
-	        for (int i = 0; i <= cur; i++) {
-	        	if (selected + i <= k) {
-	        		for (int j = 0; j < i; j++) {
-	        			temp.add(distinctNums.get(index));
-	        		}
-	        		// System.out.println(index + " : " + temp);
-	        		helper(map, k, distinctNums, index + 1, selected + i, temp, result);
-	        		// temp is a container, don't forget to remove the added elements
-	        		for (int j = 0; j < i; j++) {
-	        			temp.remove(temp.size() - 1);
-	        		}
-	        	}
+	        for (int i = 0; i <= Math.min(cur, k - selected); i++) {
+	        	if (i != 0) temp.add(distinctNums.get(index));
+	        	// System.out.println(index + " : " + temp);
+	        	helper(map, k, distinctNums, index + 1, selected + i, temp, result);
 	        }
+	        
+        	// temp is a container, don't forget to remove the added elements
+        	for (int i = 1; i <= Math.min(cur, k - selected); i++) {
+        		temp.remove(temp.size() - 1);
+        	}
 	    }
 	    
 	    public static void main(String[] args) {

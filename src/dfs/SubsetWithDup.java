@@ -55,14 +55,14 @@ public class SubsetWithDup {
     	
     	int cur = distinctNum.get(index);
     	for (int i = 0; i <= map.get(cur); i++) {
-    		for (int j = 0; j < i; j++) {
-    			temp.add(cur);
-    		}
+    		if (i != 0) temp.add(cur);
     		dfs(map, distinctNum, index + 1, temp, result);
-    		for (int j = 0; j < i; j++) {
-    			temp.remove(temp.size() - 1);
-    		}
     	}
+    	
+    	// int cur has been added at most map.get(cur) times
+		for (int i = 1; i <= map.get(cur); i++) {
+			temp.remove(temp.size() - 1);
+		}
     }
     
     public static void main(String[] args) {
