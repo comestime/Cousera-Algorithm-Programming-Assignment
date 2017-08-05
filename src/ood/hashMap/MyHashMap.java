@@ -1,23 +1,17 @@
-/*
- * My implementation of Hash Map
- */
-
-package hashMap;
-
-import java.util.Arrays;
+package ood.hashMap;
 
 public class MyHashMap<K, V> {
 	public static class Node<K, V> {
-		final K key;
-		V value;
-		Node<K, V> next;
+		private final K key;
+		private V value;
+		private Node<K, V> next;
 		
-		Node(K key, V value) {
+		public Node(K key, V value) {
 			this.key = key;
 			this.value = value;
 		}
 		
-		public K getKey(){
+		public K getKey() {
 			return key;
 		}
 		
@@ -30,13 +24,18 @@ public class MyHashMap<K, V> {
 		}
 	}
 	
-	private static final int INITIAL_CAPACITY = 17;
-	private static final double LOAD_FACTOR = 0.7;
-	private int size;
 	private Node<K, V>[] array;
+	private int size;
+	private static final int INITIAL_CAPACITY = 18;
+	private static final double LOAD_FACTOR = 0.75;
 	
 	public MyHashMap() {
-		this.array = (Node<K, V>[]) (new Node[INITIAL_CAPACITY]);
+		array = (Node<K, V>[]) (new Node[INITIAL_CAPACITY]);
+		size = 0;
+	}
+	
+	public MyHashMap(int cap) {
+		array = (Node<K, V>[]) (new Node[cap]);
 		size = 0;
 	}
 	
@@ -48,9 +47,19 @@ public class MyHashMap<K, V> {
 		return size == 0;
 	}
 	
-	public void clear() {
-		Arrays.fill(this.array, null);
-		size = 0;
+	/*
+	 * Returns the value to which the specified key is mapped, 
+	 * or null if this map contains no mapping for the key.
+	 */
+	public V get(K key) {
+		int index = getIndex(key);
+		Node<K, V> cur = array[index];
+		while (cur != null) {
+			if (equalKey(cur.getKey(), key)) return cur.getValue();
+			// update next node
+			cur = cur.next;
+		}
+		return null;
 	}
 	
 	/*
@@ -59,38 +68,22 @@ public class MyHashMap<K, V> {
 	 */
 	public V put(K key, V value) {
 		int index = getIndex(key);
-		Node<K, V> node = array[index];
-		while (node != null) {
-			if (equalsKey(node.getKey(), key)) {
-				V returnValue = node.getValue();
-				node.setValue(value);
-				return returnValue;
+		Node<K, V> cur = array[index];
+		while (cur != null) {
+			if (equalKey(cur.getKey(), key)) {
+				V oldValue = cur.getValue();
+				cur.setValue(value);
+				return oldValue;
 			}
-			node = node.next;
+			// update next node
+			cur = cur.next;
 		}
-		// if no key found, insert the <K, V> pair in the head of the linked list
-		Node<K, V> newEntry = new Node<K, V>(key, value);
-		newEntry.next = array[index];
-		array[index] = newEntry;
+		// if not found, insert the new node at the head of the list
+		Node<K, V> node = new Node<K, V>(key, value);
+		node.next = array[index];
+		array[index] = node;
 		size++;
-		// if hit load factor, rehash
-		reHash();
-		return null;
-	}
-	
-	/*
-	 * Returns the value to which the specified key is mapped, 
-	 * or null if this map contains no mapping for the key.
-	 */
-	public V get(K key) {
-		int index = getIndex(key);
-		Node<K, V> node = array[index];
-		while (node != null) {
-			if (equalsKey(node.getKey(), key)) {
-				return node.getValue();
-			}
-			node = node.next;
-		}
+		rehash();
 		return null;
 	}
 	
@@ -103,16 +96,17 @@ public class MyHashMap<K, V> {
 		Node<K, V> cur = array[index];
 		Node<K, V> prev = null;
 		while (cur != null) {
-			if (equalsKey(cur.getKey(), key)) {
-				// delete linked list head
+			if (equalKey(cur.getKey(), key)) {
+				// head of the linked list
 				if (prev == null) {
 					array[index] = cur.next;
 				} else {
-					prev.next = cur.next;
+					prev.next = cur.next;	
 				}
 				size--;
 				return cur.getValue();
 			}
+			// update next node
 			prev = cur;
 			cur = cur.next;
 		}
@@ -123,64 +117,54 @@ public class MyHashMap<K, V> {
 		int index = getIndex(key);
 		Node<K, V> cur = array[index];
 		while (cur != null) {
-			if (equalsKey(cur.getKey(), key)) {
-				return true;
-			}
-			// update node
+			if (equalKey(cur.getKey(), key)) return true;
+			// update next node
 			cur = cur.next;
 		}
 		return false;
 	}
 	
 	public boolean containsValue(V value) {
-		if (isEmpty()) return false;
 		for (Node<K, V> node : array) {
 			while (node != null) {
-				if (equalsValue(node.getValue(), value)) {
-					return true;
-				}
-				// update node
+				if (equalValue(node.getValue(), value)) return true;
+				// update next node
 				node = node.next;
 			}
 		}
 		return false;
- 	}
+	}
 	
-	private int getIndex(K key) {
-		if (key == null) return 0;
-		// make sure the return value is always non-negative
-		return (key.hashCode() & 0x7fffffff) % array.length;
+	private void rehash() {
+		if (size < LOAD_FACTOR * array.length) return;
+		Node<K, V>[] newArray = (Node<K, V>[]) (new Node[array.length * 2]);
+		for (Node<K, V> node : array) {
+			while (node != null) {
+				Node<K, V> cur = node;
+				node = node.next;
+				int newIndex = hash(cur.getKey()) % newArray.length;
+				cur.next = newArray[newIndex];
+				newArray[newIndex] = cur;
+			}
+		}
+		// update the instance variable
+		array = newArray;
 	}
 	
 	private int hash(K key) {
 		return (key.hashCode() & 0x7fffffff);
 	}
 	
-	private boolean equalsKey(K key1, K key2) {
-		// corner case: key1 == null
+	private int getIndex(K key) {
+		return hash(key) % array.length;
+	}
+	
+	private boolean equalKey(K key1, K key2) {
 		return key1 == key2 || key1 != null && key1.equals(key2);
 	}
 	
-	private boolean equalsValue(V value1, V value2) {
-		// corner case: value1 == null
+	private boolean equalValue(V value1, V value2) {
 		return value1 == value2 || value1 != null && value1.equals(value2);
-	}
-	
-	private void reHash() {
-		if (size > LOAD_FACTOR * array.length) {
-			Node<K, V>[] newArray = (Node<K, V>[])(new Node[array.length * 2]);
-			for (Node<K, V> cur : array) {
-				while (cur != null) {
-					Node<K, V> node = cur;
-					cur = cur.next;
-					int newIndex = hash(node.getKey()) % newArray.length;
-					node.next = newArray[newIndex];
-					newArray[newIndex] = node;
-				}
-			}
-			
-			array = newArray;
-		}
 	}
 	
 	public static void main(String[] args) {
@@ -226,7 +210,6 @@ public class MyHashMap<K, V> {
 		System.out.println("6.2  " + map.containsKey("A"));
 		System.out.println("6.3  " + map.containsKey("B"));
 		System.out.println("6.4  " + map.get("A"));
-		System.out.println("6.5  " + map.get("B"));
-		
+		System.out.println("6.5  " + map.get("B"));		
 	}
 }
