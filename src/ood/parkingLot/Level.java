@@ -28,23 +28,19 @@ class Level {
 		return false;
 	}
 	
-	boolean park(Vehicle v) {
+	ParkingSpot park(Vehicle v) {
 		for (ParkingSpot spot : spots) {
 			if (spot.fit(v)) {
 				spot.park(v);
-				return true;
+				return spot;
 			}
 		}
-		return false;
+		return null;
 	}
 	
-	boolean leave(Vehicle v) {
-		for (ParkingSpot spot: spots) {
-			if (spot.getVehicle() == v) {
-				spot.leave();
-				return true;
-			}
-		}
-		return false;
+	boolean leave(ParkingSpot spot) {
+		if (spot == null) return false;
+		spot.leave();
+		return true;
 	}
 }
