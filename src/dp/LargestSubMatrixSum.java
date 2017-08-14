@@ -147,7 +147,7 @@ public class LargestSubMatrixSum {
 		int col = matrix[0].length;
 		
 		// Step 1: preprocessing, calculate 1D prefix-sum
-		// preSum[i][j] represents the sum from matrix[i][0] to matrix[i][j - 1]
+		// preSum[i][j] represents the sum from matrix[i][0] to matrix[i][j]
 		int[][] preSum = new int[row][col];
 		for (int i = 0; i < row; i++) {
 			preSum[i][0] = matrix[i][0];
