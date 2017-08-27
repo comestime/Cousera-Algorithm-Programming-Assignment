@@ -7,7 +7,7 @@ package probablity;
 
 public class Random7UsingRandom5 {
 	public static int random5() {
-		return (int)(Math.random() * 6);
+		return (int)(Math.random() * 5);
 	}
 	
 	public int random7() {
