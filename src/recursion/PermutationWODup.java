@@ -8,7 +8,7 @@ Set = "", all permutations are [""]
 Set = null, all permutations are []
  */
 
-package dfs;
+package recursion;
 
 import java.util.ArrayList;
 import java.util.List;

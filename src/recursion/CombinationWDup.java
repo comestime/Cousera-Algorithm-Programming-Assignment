@@ -14,7 +14,7 @@ If array = [1, 1, 2, 3] and k = 2, the solution is:
 ]
 */
 
-package dfs;
+package recursion;
 
 import java.util.ArrayList;
 import java.util.HashMap;

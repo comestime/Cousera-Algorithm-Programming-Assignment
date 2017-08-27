@@ -26,7 +26,7 @@ The lowest common ancestor of 2, 3, 14 is 5
 The lowest common ancestor of 2, 3, 9 is 9
  */
 
-package dfs;
+package recursion;
 
 import java.util.Set;
 

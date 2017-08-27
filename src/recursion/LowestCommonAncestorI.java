@@ -24,7 +24,7 @@ The lowest common ancestor of 2 and 14 is 5
 The lowest common ancestor of 2 and 9 is 9
  */
 
-package dfs;
+package recursion;
 
 import bfs.TreeNode;
 

@@ -12,15 +12,15 @@ Examples
 
   {9, 10, 11, 12} }
 
-the traversal sequence is [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7] 
-*/
+the traversal sequence is [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+ */
 
-package dfs;
+package recursion;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpiralOrderTraversal {
+public class SpiralOrderGeneration {
 	public List<Integer> spiral(int[][] matrix) {
 		List<Integer> result = new ArrayList<Integer>();
 		if (matrix.length == 0 || matrix[0].length == 0) return result;
@@ -40,39 +40,29 @@ public class SpiralOrderTraversal {
 		}
 		// base case 3: one row left
 		if (upper == lower) {
-		    for (int i = left; i <= right; i++) {
-		    	result.add(matrix[lower][i]);
+		   for (int i = left; i <= right; i++) {
+		       result.add(matrix[lower][i]);
 		    }
 		    return;
 		}
-		    
+		   
 		// step 1: upper edge
 		for (int i = left; i < right; i++) {
-		   result.add(matrix[upper][i]);
+			result.add(matrix[upper][i]);
 		}    
 		// step 2: right edge
 		for (int i = upper; i < lower; i++) {
-		   result.add(matrix[i][right]);
+		    result.add(matrix[i][right]);
 		}
 		// step 3: lower edge
 		for (int i = right; i > left; i--) {
-		   result.add(matrix[lower][i]);
+		    result.add(matrix[lower][i]);
 		}
 		// step 4: left edge
 		for (int i = lower; i > upper; i--) {
-		   result.add(matrix[i][left]);
+		    result.add(matrix[i][left]);
 		}
 		    
 		helper(matrix, left + 1, right - 1, upper + 1, lower - 1, result);
-	}
-	
-	public static void main(String[] args) {
-		SpiralOrderTraversal solution = new SpiralOrderTraversal();
-		int[][] test = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
-		System.out.println(solution.spiral(test));
-		test = new int[][]{{1, 2,3, 4},{5,6, 7, 8},{9, 10, 11, 12}};
-		System.out.println(solution.spiral(test));
-		test = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}};
-		System.out.println(solution.spiral(test));
 	}
 }

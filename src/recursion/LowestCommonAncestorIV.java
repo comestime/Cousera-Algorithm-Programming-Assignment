@@ -8,7 +8,7 @@ There is no parent pointer for the nodes in the k-nary tree
 The given k nodes are guaranteed to be in the k-nary tree
  */
 
-package dfs;
+package recursion;
 
 import java.util.Set;
 

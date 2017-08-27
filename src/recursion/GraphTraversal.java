@@ -4,7 +4,7 @@
  * Graph is represented by a list of GraphNodes, who are pointing at all their neighbors
  */
 
-package dfs;
+package recursion;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

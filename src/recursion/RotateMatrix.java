@@ -21,7 +21,7 @@ after rotation is
   {5,  4,  3} }
  */
 
-package dfs;
+package recursion;
 
 public class RotateMatrix {
 	public void rotate(int[][] matrix) {
