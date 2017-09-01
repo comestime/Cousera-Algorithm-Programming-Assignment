@@ -1,6 +1,11 @@
+/*
+ * A thread-safe implementation of hash map
+ */
+
 package ood.hashMap;
 
 public class MyHashMap<K, V> {
+	// The node/map entry is not thread safe; requires synchronization externally
 	public static class Node<K, V> {
 		private final K key;
 		private V value;
@@ -39,11 +44,11 @@ public class MyHashMap<K, V> {
 		size = 0;
 	}
 	
-	public int size() {
+	public synchronized int size() {
 		return size;
 	}
 	
-	public boolean isEmpty() {
+	public synchronized boolean isEmpty() {
 		return size == 0;
 	}
 	
@@ -51,7 +56,7 @@ public class MyHashMap<K, V> {
 	 * Returns the value to which the specified key is mapped, 
 	 * or null if this map contains no mapping for the key.
 	 */
-	public V get(K key) {
+	public synchronized V get(K key) {
 		int index = getIndex(key);
 		Node<K, V> cur = array[index];
 		while (cur != null) {
@@ -66,7 +71,7 @@ public class MyHashMap<K, V> {
 	 * the previous value associated with key, or null if there was no mapping for key. 
 	 * A null return can also indicate that the map previously associated null with key.
 	 */
-	public V put(K key, V value) {
+	public synchronized V put(K key, V value) {
 		int index = getIndex(key);
 		Node<K, V> cur = array[index];
 		while (cur != null) {
@@ -91,7 +96,7 @@ public class MyHashMap<K, V> {
 	 * the previous value associated with key, or null if there was no mapping for key.
 	 * A null return can also indicate that the map previously associated null with key.
 	 */
-	public V remove(K key) {
+	public synchronized V remove(K key) {
 		int index = getIndex(key);
 		Node<K, V> cur = array[index];
 		Node<K, V> prev = null;
@@ -113,7 +118,7 @@ public class MyHashMap<K, V> {
 		return null;
 	}
 	
-	public boolean containsKey(K key) {
+	public synchronized boolean containsKey(K key) {
 		int index = getIndex(key);
 		Node<K, V> cur = array[index];
 		while (cur != null) {
@@ -124,7 +129,7 @@ public class MyHashMap<K, V> {
 		return false;
 	}
 	
-	public boolean containsValue(V value) {
+	public synchronized boolean containsValue(V value) {
 		for (Node<K, V> node : array) {
 			while (node != null) {
 				if (equalValue(node.getValue(), value)) return true;
