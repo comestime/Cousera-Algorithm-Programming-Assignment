@@ -4,6 +4,8 @@ import java.util.List;
 
 public class TreeNode {
 	public int val;
+	public int value;
+	public int key;
 	// to mimic a binary tree
     public TreeNode left;
     public TreeNode right;
