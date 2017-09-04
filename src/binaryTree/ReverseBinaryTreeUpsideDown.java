@@ -44,7 +44,7 @@ The sequence [1, 2, #, 3, 4, #, #, #] represents the following binary tree:
     4
  */
 
-package recursion;
+package binaryTree;
 
 import bfs.TreeNode;
 
